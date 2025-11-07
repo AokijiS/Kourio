@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tournoi Kour.io – BUT 1</title>
+  <meta name="description" content="Tournoi Kour.io du BUT 1 : 4v4, 6 équipes, convivial et compétitif, avant les vacances de Noël." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-light:#f8fafc;
+      --bg-dark:#0f172a;
+      --text-light:#0b1220;
+      --text-dark:#e2e8f0;
+      --card-light:#ffffff;
+      --card-dark:#1e293b;
+      --ring-light:#e2e8f0;
+      --ring-dark:#334155;
+    }
+
+    .btn.disabled {
+      pointer-events: none;
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: background .3s, color .3s;
+    }
+    body.dark { background: var(--bg-dark); color: var(--text-dark); }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: 1080px; margin-inline: auto; padding: 0 20px; }
+
+    /* --- HEADER --- */
+    header {
+      position: sticky; top: 0; z-index: 50;
+      background: #ffffffcc;
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--ring-light);
+      transition: background .3s;
+    }
+    body.dark header { background: #1e293bcc; border-color: var(--ring-dark); }
+    .nav { height: 64px; display: flex; align-items: center; justify-content: space-between; }
+    .nav a { font-weight: 600; font-size: 14px; margin-left: 18px; }
+
+    /* --- BOUTONS --- */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      border: 1px solid var(--ring-light);
+      padding: .65rem 1rem;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: background .3s, border .3s;
+    }
+    .btn.primary { background: #111827; color: #fff; border-color: transparent; }
+    .btn:hover { background: #f1f5f9; }
+    .btn.primary:hover { opacity: .9; }
+    body.dark .btn { border-color: var(--ring-dark); }
+    body.dark .btn:hover { background: #334155; }
+
+    /* --- MODE SOMBRE --- */
+    .theme-toggle {
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--ring-light);
+      background: transparent;
+      transition: background .3s;
+    }
+    .theme-toggle:hover { background: #f1f5f9; }
+    body.dark .theme-toggle { border-color: var(--ring-dark); }
+    body.dark .theme-toggle:hover { background: #334155; }
+
+    /* --- CONTENU --- */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--ring-light);
+      padding: 6px 10px;
+      border-radius: 9999px;
+      font-size: 12px;
+      margin: 4px;
+    }
+    body.dark .pill { border-color: var(--ring-dark); }
+
+    section {
+      padding: 64px 0;
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1, h2, h3, h4 { margin-top: 0; }
+    h2 { font-size: 28px; margin: 0 0 6px; }
+    .subtitle { color: #475569; margin: 0 0 24px; }
+    body.dark .subtitle { color: #cbd5e1; }
+
+    .grid { display: grid; gap: 20px; }
+    @media(min-width:768px) {
+      .grid-2 { grid-template-columns: 1fr 1fr; }
+      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .card {
+      background: var(--card-light);
+      border: 1px solid var(--ring-light);
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 4px 16px rgba(2,6,23,.04);
+      transition: background .3s, border .3s;
+    }
+    body.dark .card { background: var(--card-dark); border-color: var(--ring-dark); }
+
+    .small { font-size: 14px; color: #475569; }
+    body.dark .small { color: #cbd5e1; }
+
+    footer {
+      border-top: 1px solid var(--ring-light);
+      padding: 36px 0;
+      background: #fff;
+      transition: background .3s;
+    }
+    body.dark footer { background: #1e293b; border-color: var(--ring-dark); }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container nav">
+      <a href="#top" style="font-weight:800">🎮 Tournoi Kour.io – BUT 1</a>
+      <nav>
+        <a href="#objectif">But</a>
+        <a href="#format">Format</a>
+        <a href="#jeu">Jeu</a>
+        <a href="#planning">Planning</a>
+        <a href="#regles">Règles</a>
+        <a href="#stream">Stream</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <div style="display:flex;align-items:center;gap:10px">
+        <button id="themeToggle" class="theme-toggle" aria-label="Changer de thème">🌞</button>
+      </div>
+    </div>
+  </header>
+
+  <section id="top" class="visible">
+    <div class="container">
+      <div class="pills">
+        <span class="pill">4v4 • Recherche & Destruction</span>
+        <span class="pill">6 équipes</span>
+        <span class="pill">Avant les vacances de Noël</span>
+        <span class="pill">4ᵉ étage – IUT (à confirmer)</span>
+      </div>
+      <h1>Tournoi Kour.io du BUT 1</h1>
+      <p class="small">Un événement e-sport étudiant pour jouer, s’amuser et créer du lien — dans un esprit compétitif, fair-play et convivial.</p>
+      <div class="cta">
+        <a class="btn disabled" href="#stream">🔒 Suivre le live</a>
+      </div>
+<div style="text-align:center; margin-top:30px;">
+  <a class="btn primary" href="https://forms.gle/fiuNVLq2LacdowGQ6" target="_blank">
+    📝 Veuillez tous ,s'il vous plait, répondre à ce forms avant de vous avancer plus loin 
+  </a>
+</div>
+
+    </div>
+  </section>
+
+  <section id="objectif">
+    <div class="container">
+      <h2>Le but du tournoi</h2>
+      <p class="subtitle">À la fois fun et fédérateur : un moment pour rassembler tout le BUT autour du jeu vidéo.</p>
+      <div class="grid grid-3">
+        <div class="card"><h3>Créer du lien</h3><p class="small">Renforcer la cohésion entre promotions et favoriser l’intégration de chacun.</p></div>
+        <div class="card"><h3>Compétition amicale</h3><p class="small">Un format 4v4 rapide et équilibré pour des matchs intenses mais accessibles à tous.</p></div>
+        <div class="card"><h3>Esprit d’équipe</h3><p class="small">Encourager la collaboration, le respect et la bonne ambiance tout au long de l’événement.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="format">
+    <div class="container">
+      <h2>Format du tournoi</h2>
+      <p class="subtitle">6 équipes, 4v4, mode Recherche & Destruction — le tout dans une ambiance e-sport étudiante !</p>
+      <div class="card">
+        <h3>2 groupes de 3 → demi-finales → finale</h3>
+        <ul>
+          <li>Chaque équipe joue 2 matchs de groupe.</li>
+          <li>Les 2 meilleures équipes accèdent aux demi-finales.</li>
+          <li>Petite finale et grande finale pour clôturer le tournoi.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="jeu">
+    <div class="container">
+      <h2>Présentation du jeu</h2>
+      <div class="card">
+        <p class="small">Kour.io est un jeu de tir en ligne inspiré de Counter-Strike. Il propose plusieurs modes de jeu, dont le mode <strong>Recherche et Destruction</strong>, utilisé pour ce tournoi. Il se joue directement sur navigateur et reprend les mécaniques classiques du FPS tactique, avec des cartes similaires à celles du célèbre Counter-Strike.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="planning">
+    <div class="container">
+      <h2>Planning indicatif</h2>
+      <div class="pills">
+        <span class="pill">📅 Les horaires indiquées ci-dessous sont hypothétiques et représentent le scénario le plus long.</span>
+      </div>
+      <div class="grid grid-3">
+        <div class="card"><h3>Check-in & briefing</h3><p class="small">13:00 – 13:20 · Accueil des joueurs et rappel des règles.</p></div>
+        <div class="card"><h3>Matchs de groupe</h3><p class="small">13:20 – 15:00 · 6 matchs en BO1.</p></div>
+        <div class="card"><h3>Playoffs</h3><p class="small">15:15 – 17:00 · Demi-finales et finale.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="regles">
+    <div class="container">
+      <h2>Règles clés</h2>
+      <div class="grid grid-2">
+        <div class="card">
+          <h3>Paramètres de match</h3>
+          <ul>
+            <li>Mode : Recherche & Destruction.</li>
+            <li>Équipes : 4v4 (6 au total).</li>
+            <li>Durée : BO1 en groupes, BO3 en finale (selon le temps disponible).</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Fair-play & conduite</h3>
+          <ul>
+            <li>Aucune triche, ni comportement toxique.</li>
+            <li>Les décisions des arbitres sont finales.</li>
+            <li>Respect du matériel et des locaux.</li>
+            <li>Trash talk autorisé tant qu’il reste respectueux — tout abus pourra entraîner une exclusion.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="stream">
+    <div class="container">
+      <h2>Diffusion & commentaires</h2>
+      <div class="card">
+        <p class="small">Les demi-finales et la grande finale seront diffusées en direct sur Twitch, avec des commentateurs étudiants.</p>
+        <div><a class="btn disabled">🔒 Chaîne Twitch</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <h2>FAQ</h2>
+      <div class="grid grid-2">
+        <div class="card"><h3>Qui peut participer ?</h3><p class="small">Le tournoi est ouvert à tous les étudiants du BUT 1.</p></div>
+        <div class="card"><h3>Faut-il un niveau minimum ?</h3><p class="small">Non, l’objectif est de s’amuser et de partager un bon moment.</p></div>
+        <div class="card"><h3>Y a-t-il des lots ?</h3><p class="small">Des récompenses symboliques seront offertes selon le budget et les résultats du sondage.</p></div>
+        <div class="card"><h3>Pourquoi venir même sans équipe ?</h3><p class="small">Le tournoi est avant tout un moment pour rencontrer d’autres étudiants et, pour certains, vaincre leur timidité.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center">
+        <div><strong>Tournoi Kour.io – BUT 1</strong><p class="small">Projet étudiant à visée sociale et conviviale.</p></div>
+        <div><a class="btn" href="#">GitHub</a> <a class="btn" href="mailto:contact@example.com">Contact</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // --- Thème clair/sombre ---
+    const btn = document.getElementById('themeToggle');
+    btn.addEventListener('click', () => {
+      document.body.classList.toggle('dark');
+      btn.textContent = document.body.classList.contains('dark') ? '🌙' : '🌞';
+      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+    });
+    if (localStorage.getItem('theme') === 'dark') {
+      document.body.classList.add('dark');
+      btn.textContent = '🌙';
+    }
+
+    // --- Animation de fondu au scroll ---
+    const sections = document.querySelectorAll('section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.15 });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
