@@ -1,316 +1,180 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
   <title>Tournoi Kour.io – BUT 1</title>
-  <meta name="description" content="Tournoi Kour.io du BUT 1 : 4v4, 6 équipes, convivial et compétitif, avant les vacances de Noël." />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-
   <style>
-    :root {
-      --bg-light:#f8fafc;
-      --bg-dark:#0f172a;
-      --text-light:#0b1220;
-      --text-dark:#e2e8f0;
-      --card-light:#ffffff;
-      --card-dark:#1e293b;
-      --ring-light:#e2e8f0;
-      --ring-dark:#334155;
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f3f3f3;
+      color: #222;
+      text-align: center;
+    }
+
+    header {
+      background-color: white;
+      padding: 15px 0;
+      border-bottom: 2px solid #ddd;
+    }
+
+    nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+    }
+
+    section {
+      background-color: white;
+      margin: 30px auto;
+      padding: 20px;
+      width: 80%;
+      max-width: 900px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    h1, h2 {
+      color: #111;
+    }
+
+    p {
+      line-height: 1.5;
+    }
+
+    .pill {
+      display: inline-block;
+      background-color: #eee;
+      border: 1px solid #ccc;
+      border-radius: 15px;
+      padding: 5px 10px;
+      margin: 3px;
+      font-size: 12px;
+    }
+
+    .btn {
+      display: inline-block;
+      background-color: black;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      text-decoration: none;
+      margin-top: 15px;
     }
 
     .btn.disabled {
+      background-color: gray;
       pointer-events: none;
-      opacity: 0.6;
-      cursor: not-allowed;
     }
 
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-      background: var(--bg-light);
-      color: var(--text-light);
-      transition: background .3s, color .3s;
-    }
-    body.dark { background: var(--bg-dark); color: var(--text-dark); }
-    a { color: inherit; text-decoration: none; }
-    .container { max-width: 1080px; margin-inline: auto; padding: 0 20px; }
-
-    /* --- HEADER --- */
-    header {
-      position: sticky; top: 0; z-index: 50;
-      background: #ffffffcc;
-      backdrop-filter: blur(8px);
-      border-bottom: 1px solid var(--ring-light);
-      transition: background .3s;
-    }
-    body.dark header { background: #1e293bcc; border-color: var(--ring-dark); }
-    .nav { height: 64px; display: flex; align-items: center; justify-content: space-between; }
-    .nav a { font-weight: 600; font-size: 14px; margin-left: 18px; }
-
-    /* --- BOUTONS --- */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: .5rem;
-      border: 1px solid var(--ring-light);
-      padding: .65rem 1rem;
-      border-radius: 12px;
-      font-weight: 700;
-      transition: background .3s, border .3s;
-    }
-    .btn.primary { background: #111827; color: #fff; border-color: transparent; }
-    .btn:hover { background: #f1f5f9; }
-    .btn.primary:hover { opacity: .9; }
-    body.dark .btn { border-color: var(--ring-dark); }
-    body.dark .btn:hover { background: #334155; }
-
-    /* --- MODE SOMBRE --- */
-    .theme-toggle {
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      border: 1px solid var(--ring-light);
-      background: transparent;
-      transition: background .3s;
-    }
-    .theme-toggle:hover { background: #f1f5f9; }
-    body.dark .theme-toggle { border-color: var(--ring-dark); }
-    body.dark .theme-toggle:hover { background: #334155; }
-
-    /* --- CONTENU --- */
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      border: 1px solid var(--ring-light);
-      padding: 6px 10px;
-      border-radius: 9999px;
-      font-size: 12px;
-      margin: 4px;
-    }
-    body.dark .pill { border-color: var(--ring-dark); }
-
-    section {
-      padding: 64px 0;
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    section.visible {
-      opacity: 1;
-      transform: translateY(0);
+    img {
+      width: 100%;
+      max-width: 700px;
+      border-radius: 10px;
+      margin-top: 10px;
     }
 
-    h1, h2, h3, h4 { margin-top: 0; }
-    h2 { font-size: 28px; margin: 0 0 6px; }
-    .subtitle { color: #475569; margin: 0 0 24px; }
-    body.dark .subtitle { color: #cbd5e1; }
-
-    .grid { display: grid; gap: 20px; }
-    @media(min-width:768px) {
-      .grid-2 { grid-template-columns: 1fr 1fr; }
-      .grid-3 { grid-template-columns: repeat(3, 1fr); }
+    ul {
+      list-style-type: none;
+      padding: 0;
     }
-
-    .card {
-      background: var(--card-light);
-      border: 1px solid var(--ring-light);
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 4px 16px rgba(2,6,23,.04);
-      transition: background .3s, border .3s;
+    ul li {
+      margin: 5px 0;
     }
-    body.dark .card { background: var(--card-dark); border-color: var(--ring-dark); }
-
-    .small { font-size: 14px; color: #475569; }
-    body.dark .small { color: #cbd5e1; }
 
     footer {
-      border-top: 1px solid var(--ring-light);
-      padding: 36px 0;
-      background: #fff;
-      transition: background .3s;
+      background-color: white;
+      padding: 15px 0;
+      border-top: 2px solid #ddd;
+      margin-top: 30px;
     }
-    body.dark footer { background: #1e293b; border-color: var(--ring-dark); }
   </style>
 </head>
 
 <body>
+
   <header>
-    <div class="container nav">
-      <a href="#top" style="font-weight:800">🎮 Tournoi Kour.io – BUT 1</a>
-      <nav>
-        <a href="#objectif">But</a>
-        <a href="#format">Format</a>
-        <a href="#jeu">Jeu</a>
-        <a href="#planning">Planning</a>
-        <a href="#regles">Règles</a>
-        <a href="#stream">Stream</a>
-        <a href="#faq">FAQ</a>
-      </nav>
-      <div style="display:flex;align-items:center;gap:10px">
-        <button id="themeToggle" class="theme-toggle" aria-label="Changer de thème">🌞</button>
-      </div>
-    </div>
+    <h1>🎮 Tournoi Kour.io – BUT 1</h1>
+    <nav>
+      <a href="#objectif">But</a>
+      <a href="#format">Format</a>
+      <a href="#jeu">Jeu</a>
+      <a href="#planning">Planning</a>
+      <a href="#regles">Règles</a>
+      <a href="#faq">FAQ</a>
+    </nav>
   </header>
 
-  <section id="top" class="visible">
-    <div class="container">
-      <div class="pills">
-        <span class="pill">4v4 • Recherche & Destruction</span>
-        <span class="pill">6 équipes</span>
-        <span class="pill">Avant les vacances de Noël</span>
-        <span class="pill">4ᵉ étage – IUT (à confirmer)</span>
-      </div>
-      <h1>Tournoi Kour.io du BUT 1</h1>
-      <p class="small">Un événement e-sport étudiant pour jouer, s’amuser et créer du lien — dans un esprit compétitif, fair-play et convivial.</p>
-      <div class="cta">
-        <a class="btn disabled" href="#stream">🔒 Suivre le live</a>
-      </div>
-<div style="text-align:center; margin-top:30px;">
-  <a class="btn primary" href="https://forms.gle/fiuNVLq2LacdowGQ6" target="_blank">
-    📝 Veuillez tous ,s'il vous plait, répondre à ce forms avant de vous avancer plus loin 
-  </a>
-</div>
-
+  <section id="top">
+    <div>
+      <span class="pill">4v4</span>
+      <span class="pill">6 équipes</span>
+      <span class="pill">Avant Noël</span>
+      <span class="pill">4e étage - IUT</span>
+    </div>
+    <h2>Bienvenue au tournoi Kour.io du BUT 1 !</h2>
+    <p>Un événement e-sport étudiant pour s’amuser, créer du lien et vivre une compétition fun et fair-play.</p>
+    <img src="data:image/jpeg;base64,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" alt="Image du jeu Kour.io">
+    <div>
+      <a class="btn" href="https://forms.gle/fiuNVLq2LacdowGQ6" target="_blank">📝 Remplir le formulaire</a>
+      <a class="btn disabled">🔒 Suivre le live</a>
     </div>
   </section>
 
   <section id="objectif">
-    <div class="container">
-      <h2>Le but du tournoi</h2>
-      <p class="subtitle">À la fois fun et fédérateur : un moment pour rassembler tout le BUT autour du jeu vidéo.</p>
-      <div class="grid grid-3">
-        <div class="card"><h3>Créer du lien</h3><p class="small">Renforcer la cohésion entre promotions et favoriser l’intégration de chacun.</p></div>
-        <div class="card"><h3>Compétition amicale</h3><p class="small">Un format 4v4 rapide et équilibré pour des matchs intenses mais accessibles à tous.</p></div>
-        <div class="card"><h3>Esprit d’équipe</h3><p class="small">Encourager la collaboration, le respect et la bonne ambiance tout au long de l’événement.</p></div>
-      </div>
-    </div>
+    <h2>Le but du tournoi</h2>
+    <p>Ce tournoi a pour objectif de rassembler les étudiants autour du jeu vidéo, de renforcer la cohésion entre promotions et de favoriser l’esprit d’équipe.</p>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTloXwgEYIK8QAlXwGXRh9RiJHXubTHhwTdmw&s" alt="Capture du jeu Kour.io">
   </section>
 
   <section id="format">
-    <div class="container">
-      <h2>Format du tournoi</h2>
-      <p class="subtitle">6 équipes, 4v4, mode Recherche & Destruction — le tout dans une ambiance e-sport étudiante !</p>
-      <div class="card">
-        <h3>2 groupes de 3 → demi-finales → finale</h3>
-        <ul>
-          <li>Chaque équipe joue 2 matchs de groupe.</li>
-          <li>Les 2 meilleures équipes accèdent aux demi-finales.</li>
-          <li>Petite finale et grande finale pour clôturer le tournoi.</li>
-        </ul>
-      </div>
-    </div>
+    <h2>Format du tournoi</h2>
+    <p>6 équipes de 4 joueurs s’affrontent sur le mode Recherche & Destruction.</p>
+    <ul>
+      <li>2 groupes de 3 équipes</li>
+      <li>Les 2 meilleures vont en demi-finales</li>
+      <li>Petite finale et grande finale pour terminer</li>
+    </ul>
   </section>
 
   <section id="jeu">
-    <div class="container">
-      <h2>Présentation du jeu</h2>
-      <div class="card">
-        <p class="small">Kour.io est un jeu de tir en ligne inspiré de Counter-Strike. Il propose plusieurs modes de jeu, dont le mode <strong>Recherche et Destruction</strong>, utilisé pour ce tournoi. Il se joue directement sur navigateur et reprend les mécaniques classiques du FPS tactique, avec des cartes similaires à celles du célèbre Counter-Strike.</p>
-      </div>
-    </div>
+    <h2>Présentation du jeu</h2>
+    <p>Kour.io est un FPS en ligne inspiré de Counter-Strike, jouable directement depuis le navigateur.  
+      Il propose plusieurs modes de jeu et des cartes variées pour des combats rapides et intenses.</p>
+    <img src="data:image/jpeg;base64,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" alt="Gameplay Kour.io">
   </section>
 
   <section id="planning">
-    <div class="container">
-      <h2>Planning indicatif</h2>
-      <div class="pills">
-        <span class="pill">📅 Les horaires indiquées ci-dessous sont hypothétiques et représentent le scénario le plus long.</span>
-      </div>
-      <div class="grid grid-3">
-        <div class="card"><h3>Check-in & briefing</h3><p class="small">13:00 – 13:20 · Accueil des joueurs et rappel des règles.</p></div>
-        <div class="card"><h3>Matchs de groupe</h3><p class="small">13:20 – 15:00 · 6 matchs en BO1.</p></div>
-        <div class="card"><h3>Playoffs</h3><p class="small">15:15 – 17:00 · Demi-finales et finale.</p></div>
-      </div>
-    </div>
+    <h2>Planning</h2>
+    <p class="pill">📅 Les horaires ci-dessous sont approximatifs.</p>
+    <ul>
+      <li>13h00 - 13h20 : Accueil et briefing</li>
+      <li>13h20 - 15h00 : Matchs de groupe</li>
+      <li>15h15 - 17h00 : Demi-finales et finale</li>
+    </ul>
   </section>
 
   <section id="regles">
-    <div class="container">
-      <h2>Règles clés</h2>
-      <div class="grid grid-2">
-        <div class="card">
-          <h3>Paramètres de match</h3>
-          <ul>
-            <li>Mode : Recherche & Destruction.</li>
-            <li>Équipes : 4v4 (6 au total).</li>
-            <li>Durée : BO1 en groupes, BO3 en finale (selon le temps disponible).</li>
-          </ul>
-        </div>
-        <div class="card">
-          <h3>Fair-play & conduite</h3>
-          <ul>
-            <li>Aucune triche, ni comportement toxique.</li>
-            <li>Les décisions des arbitres sont finales.</li>
-            <li>Respect du matériel et des locaux.</li>
-            <li>Trash talk autorisé tant qu’il reste respectueux — tout abus pourra entraîner une exclusion.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="stream">
-    <div class="container">
-      <h2>Diffusion & commentaires</h2>
-      <div class="card">
-        <p class="small">Les demi-finales et la grande finale seront diffusées en direct sur Twitch, avec des commentateurs étudiants.</p>
-        <div><a class="btn disabled">🔒 Chaîne Twitch</a></div>
-      </div>
-    </div>
+    <h2>Règles</h2>
+    <ul>
+      <li>Mode : Recherche & Destruction</li>
+      <li>Équipes : 4v4</li>
+      <li>Pas de triche ni de comportement toxique</li>
+      <li>Fair-play obligatoire, trash talk toléré s’il reste respectueux</li>
+    </ul>
   </section>
 
   <section id="faq">
-    <div class="container">
-      <h2>FAQ</h2>
-      <div class="grid grid-2">
-        <div class="card"><h3>Qui peut participer ?</h3><p class="small">Le tournoi est ouvert à tous les étudiants du BUT 1.</p></div>
-        <div class="card"><h3>Faut-il un niveau minimum ?</h3><p class="small">Non, l’objectif est de s’amuser et de partager un bon moment.</p></div>
-        <div class="card"><h3>Y a-t-il des lots ?</h3><p class="small">Des récompenses symboliques seront offertes selon le budget et les résultats du sondage.</p></div>
-        <div class="card"><h3>Pourquoi venir même sans équipe ?</h3><p class="small">Le tournoi est avant tout un moment pour rencontrer d’autres étudiants et, pour certains, vaincre leur timidité.</p></div>
-      </div>
-    </div>
+    <h2>FAQ</h2>
+    <p><b>Qui peut participer ?</b> Tous les étudiants du BUT 1.</p>
+    <p><b>Faut-il un niveau minimum ?</b> Non, tout le monde peut jouer.</p>
+    <p><b>Y aura-t-il des lots ?</b> Oui, selon le budget disponible.</p>
   </section>
 
   <footer>
-    <div class="container">
-      <div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center">
-        <div><strong>Tournoi Kour.io – BUT 1</strong><p class="small">Projet étudiant à visée sociale et conviviale.</p></div>
-        <div><a class="btn" href="#">GitHub</a> <a class="btn" href="mailto:contact@example.com">Contact</a></div>
-      </div>
-    </div>
+    <p>Tournoi Kour.io – BUT 1</p>
   </footer>
 
-  <script>
-    // --- Thème clair/sombre ---
-    const btn = document.getElementById('themeToggle');
-    btn.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      btn.textContent = document.body.classList.contains('dark') ? '🌙' : '🌞';
-      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-    });
-    if (localStorage.getItem('theme') === 'dark') {
-      document.body.classList.add('dark');
-      btn.textContent = '🌙';
-    }
-
-    // --- Animation de fondu au scroll ---
-    const sections = document.querySelectorAll('section');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    }, { threshold: 0.15 });
-    sections.forEach(section => observer.observe(section));
-  </script>
 </body>
 </html>
